@@ -4,23 +4,67 @@
 
 - ${ae^{jw}=acos(w)+jasin(w)}$
 - ${|z_1|^2=z_1\bar{z}_1}$
--  ${e^{j\omega}+e^{j(-\omega)}=2cos(\omega)}$
+- ${e^{j\omega}+e^{j(-\omega)}=2cos(\omega)}$
+- Gain of a transfer function:  
+  if it's mathematically doable, ${\mu = G(s=0)=G(jw=0)}$, so in model analysis ${\mu=G(z=1)}$ since ${z=e^{jw}}$ 
 
 
 
-## Exercise 1
+## Observations
 
-**Stationary Process**  
-A process is stationary if and only if the poles of its transfer function are ${|z|\le 1}$ and if it is fed by a stationary noise signal 
+- in an ${MA(n)}$ all the covariances ${\gamma(\tau)}$ with ${\tau>n}$ are equal to zero: ${\gamma(tau>n)=0}$ 
+- A process is stationary if its transfer function is stable (poles and zeros ${\le |1|}$) and it's fed by a stationary signal (i.e., a white noise).  
+  NB: if the transfer function is in canonical form, it is surely stable.
+- ${2\eta(t) \ \ \eta\sim WN(0,\lambda^2)\to\tilde{\eta}\sim WN(0,\lambda^22^2)}$
 
-**Compute the Variance of a signal ${y(z)=H(z)\eta (z)}$**
+
+
+## Doubts
+
+- is ${c_0}$ in MA processes always equal to 1?
+- how to find out if a closed-loop system is stable? 
+- why the results of the predictor found via PEM or via long division are different? when should I use one and why should I use the other? (page 28 exams pdf)
+
+## Exercises on Covariance & Spectra
+
+
+
+**General method to compute variance and covariance of a process**  
+Transform your process in time domain:  
+${y(t)= a_1y(t-1)+a_2y(t-2)+c_o\eta(t)+c_1\eta(t-1)}$
+
+If we recognize that it is an ${MA(n)}$, we can use a shortcut. We wrote it somewhere, go find it. 
+
+Compute ${E\big[y(t)\big]}$. if it is different from zero, transform it into an equivalent process with expected value equal to zero. =={TODO}==
+
+Since ${E \big[ y(t)\big]=0}$ we see that  
+${\gamma_y(0)=E\big[y(t)^2\big]-E\big[y(t)\big]^2=E\big[y(t)^2\big]}$ 
+
+${\gamma_y(k)=E\bigg[\bigg(y(t)-E[y(t)]\bigg) \bigg( y(t-k)-E[y(t-k)]\bigg)\bigg]=E\bigg[y(t)y(t-k)\bigg]}$  
+
+In order to compute the variance of ${y}$  do the following:
+
+${\gamma_y(0)=E[y(t)y(t)]=E\Bigg[y(t)\bigg(a_1y(t-1)+a_2y(t-2)+c_o\eta(t)+c_1\eta(t-1)\bigg)\Bigg]}$  
+
+now multiply all the members with one another and take in mind that:
+
+- ${E\Big[y(t-k)\eta(t-j)\Big]=0}$   if ${k>j}$
+
+- ${E\Big[y(t-k)\eta(t-k)\Big]=E\Big[y(t)\eta(t)\Big]=E\Bigg[\bigg(a_1y(t-1)+a_2y(t-2)+c_o\eta(t)+c_1\eta(t-1)\bigg)\eta(t)\Bigg]}$
+
+- Once you compute ${\gamma_y(0)}$ or ${\gamma_y(1)}$ (or even other covariances...) you could obtain values dependent from other covariances, for example ${\gamma_y(0)=2\gamma_y(1)}$, but don't worry, in the end you'll have a system of ${n}$ unknown covariances and ${n}$ equations.
+
+   
+
+  
+
+**Compute the Variance of an AR(1) process ${y(z)=\frac{1}{A(z)}\eta (z)}$**
 
 1. Transform the function in the domain of time
-
-   ${\gamma(y(t))=E[\space (\space y(t)-E[\space (\space y(t)\space]\space)^2\space]}$
-
-2. knowing that ${\gamma(y(t))=\gamma(y(t-1))}$ and that if ${y(t)=y(t-1)+\eta(t)}$ then ${\gamma(y(t))=\gamma(y(t))+\gamma(\eta(t))}$ if and only if ${y}$ and ${\eta}$ are independent, we can solve the last equation because usually the variance of ${\eta}$ is known.  
+2. knowing that ${\gamma_{y(t)}(0)=\gamma_{y(t-1)}(0)}$ and that ${y(t)=y(t-1)+\eta(t)}$ then ${\gamma_y(0)=\gamma_y(0)+\gamma_\eta(0)}$ if and only if ${y}$ and ${\eta}$ are independent, we can solve the last equation because usually the variance of ${\eta}$ is known.  
    Another important property of the variance is that ${\gamma(ay(t))=a^2 \gamma(y(t))}$ , given that ${a}$ is a constant.
+
+
 
 
 
@@ -28,7 +72,7 @@ A process is stationary if and only if the poles of its transfer function are ${
 
 If two signals ${\alpha}$ and ${\beta}$ are independent and ${\varphi=\alpha+\gamma}$:
 
--   ${\gamma_\varphi=\gamma_\alpha+\gamma_\beta}$
+- ${\gamma_\varphi=\gamma_\alpha+\gamma_\beta}$
 - ${\Gamma(\varphi(t))=\Gamma(\alpha(t))+\Gamma(\beta(t))}$
 
 
@@ -39,23 +83,44 @@ ${y(t)=\frac{1+az}{1+\frac{1}{a}z}\varphi(t)=(\frac{1}{a}\frac{1+az}{1+\frac{1}{
 
 
 
-1. In case the transfer function is fed by a white noise with ${E[\eta(t)]=0}​$ we can simplify the expression in: 
-   ${\gamma(y(t))=E[\space (\space y(t)\space)^2\space]}​$
+1. In case the transfer function is fed by a white noise with ${E[\eta(t)]=0}$ we can simplify the expression in: 
+   ${\gamma(y(t))=E[\space (\space y(t)\space)^2\space]}$
 
 
 
+### Draw the diagram of the prediction error variance as a function of the prediction horizon ${k}$
 
+If they ask you such question, probably they already asked you to do the long division for ${k}$ steps.
 
+Well, use the information gathered from that task, you'll use ${Q_1,Q_2,...,Q_k}$.
 
+keep in mind that 
+$$
+\varepsilon (t|t-k)=Q_k(z)\tilde{e}(t)
+$$
+where ${\tilde{e}(t)}$ is the WN of the process in canonical form.
+
+${Q_k}$ are all known, so just propagate the variance within the equation:   ${Var(\varepsilon(t|t-k))=Var(Q_k\tilde{e}(t))}$ 
+
+To do the diagram just put the ${k}$ in the ${x}$ axis, and ${variance(\varepsilon)}$ in the ${y}$ axis.
 
 ## Exercise on Minimum Variance Controller
 
+**First step: compute the ${k}$-steps predictor**
+
+1. Make sure to be in canonical form.  
+2. Compute the long division of the transfer function of ${\eta}$, which is ${\frac{C(z)}{A(z)}}$. we stop at the ${k}$-th iteration and we obtain ${R_k}$ and ${Q_k}$ (sometimes called ${E_k}$).
+3. the ${k}$-steps predictor is:  
+   ${\hat{y}(t|t-k)=\frac{\hat{R}_k}{C(z)}y(t-k)+\frac{B(z)Q_k}{C(z)}u(t-k)}$
+
+
+
 **Knowing the predictor ${y(t+2|t)}$, design the Minimum Variance Controller for the system, considering a reference signal ${y^0(t)}$.**    
 $$
-y(t)=\frac{C(z)}{A(z)}\eta(t)+B(z)
+y(t)=\frac{C(z)}{A(z)}\eta(t)+\frac{B(z)}{A(z)}u(t-k)
 $$
 We set ${\hat{y}(t+2|t)=y^0(t)}$.  
-We are able to set it this way since ${B(z)}$ if and only if ${|z|<1}$.
+We are able to set it this way if and only if ${B(z)}$ has ${|z|<1}$.
 
 Isolate ${u(t)}$. 
 
@@ -66,7 +131,11 @@ the input is ${y^0(t)}$, the output is ${y(t)}$.  take the expression of ${y}$ t
 
 
 
-## Exercise on Prediction Error Estimation 
+## Optimal Estimates of Parameters via PEM
+
+### Tips
+
+- sometimes, in order to solve the systems it's handy to compute, for example, ${(c_1+c_2)^2=\frac{\gamma(0)+2\gamma(1)}{var(e(t))}}$ and ${(c_1-c_2)^2}=\frac{\gamma(0)-2\gamma(1)}{var(e(t))}.$ 
 
 ### For ${MA}$ Processes 
 
@@ -74,7 +143,7 @@ the input is ${y^0(t)}$, the output is ${y(t)}$.  take the expression of ${y}$ t
 $$
 \delta: y(t)=2\eta (t) +4\eta(n-2)
 $$
-**where ${\eta(t)\sim WN(0.1)}​$ **
+**where ${\eta(t)\sim WN(0.1)}$ **
 
 **For such data, consider the model classes:**
 $$
@@ -89,7 +158,7 @@ $$
 
 **By using the prediction error minimization method, find the optimal estimates of parameters ${a_1}$ and ${a_2}$.**
 
-in this case we have a ${MA(2)}$ for ${\delta}$.
+in this case we have a ${MA(2)}$ for ${\delta}$. 
 
 This means that we can compute the covariances in the following way:  
 Knowing that ${y(t)=c_0\eta(t)+c_1\eta(t-1)+...}$
@@ -113,7 +182,7 @@ Let's consider only the first model:
 $$
 M_1(a):y(t)=a_1y(t-1)+\xi_1(t)
 $$
-we want in in the form:
+we want it in the form:
 $$
 y(t)=\frac{C(z)}{A(z)}\xi_1(t)
 $$
@@ -147,7 +216,7 @@ Thus obtaining
 $$
 \hat{a}_1=0
 $$
-We repeat the process to find ${a_2}$ using the model ​ ${M_2}​$
+We repeat the process to find ${a_2}$ using the model ​ ${M_2}$
 
 
 
@@ -162,7 +231,7 @@ $$
 
 **By using the prediction error minimization method, find the optimal estimates of the parameters ${a}$, ${b}$ and ${c}$.**
 
-The predictor is equal to the starting equation but for the ${\eta}​$ component:
+The predictor is equal to the starting equation but for the ${\eta}$ component:
 $$
 \hat{v}(t|t-1)=av(t-1)+bv(t-2)+cv(t-3)
 $$
@@ -201,3 +270,102 @@ and, as always, let's derive wrt ${c}$:
 $$
 \frac{\delta J}{\delta c}=2c\gamma_v(0)-2\gamma_v(3)\to \hat{c}=\frac{\gamma_v(3)}{\gamma_v(0)}=\frac{3}{10}
 $$
+
+
+
+
+
+
+
+
+## Parameter Estimation knowing Variances
+
+**MA**
+
+Usually asks which is the most suitable model class for representing the available data.  
+If you notice that ${\gamma(\tau)=0}$ for ${\tau>n}$, where ${n}$ is a finite number, you can say that the most suitable model class is a ${MA(n)}$.
+
+Write the general equation for MA processes:
+$$
+v(t)=e(t)+a_1e(t-1)+a_2e(t-2)+...a_ne(t-n)
+$$
+and use the known formulas for the covariances of MA processes to build a system of ${n+1}$ equations, then solve it. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Optimal Predictors via Long Division
+
+- take the process equation and put it in canonical form
+
+- once you do it you'll have something in the form ${y(t)=\frac{C(z)}{A(z)}e(t)}$
+
+- C(z) on the left, A(z) on the right and do the long division:  
+  Let's for example compute the optimal 1-step predictor:  
+  Do the long division between C(z) and A(z). 
+  you'll obtain a quotient ${Q_1}$ and a remainder ${R_1}$, and such remainder can be called the  1-step remainder. ${R_1}$ and ${Q_1}$ will be used for the 1-step predictor in the following way:  
+  $$
+  \hat{y}(t|t-1)=\frac{\hat{R_1}}{C(z)}y(t)
+  $$
+  **where ${\hat{R_1}}$ is ${R_1}$ considering only the coefficients of ${z}$.**  
+  So, if you want to compute the k-step predictor, just compute ${Q_K}$ and ${R_k}$ (which are the results of the ${k}$-th iteration of the long division) and use the generalize formula:  
+  $$
+  \hat{y}(t|t-k)=\frac{\hat{R_k}}{C(z)}y(t)
+  $$
+  take care, if a ${z}$ term is missing, for example ${y(t)=1-z^{-2}}$, the predictor of the missing ${z}$ term is the same of the predictor of the next ${z}$ term's corresponding step. so in this case the 1-step predictor is the same of the 2-steps predictor.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Questions
+
+##### explain what is the purpose of the final prediction error FPE method and how it can be used in practice given a set of data
+
+
+
+##### Explain the bayes problem and discuss the bayes formula
+
+
+
+##### In hte prediction theory for dtationary processes in external representation form i.e. input/output models, the canonical representation has a main role, explain what it is meant by canonical representation specifying what is the input signal and what ia the output signal of the representation and then highlight its properties. what is the role of this properties in the prediction theory?
+
+
+
+##### Briefly explain the concept of minimum variance control for a given plant described by an ARX model, when can this method be used and when not?
+
+##### How can we estimate both the state x(t9and the unknown parameter a of the system a sistemaaaa ${x(t+1)=ax(t)+v_1(t)}$ system ${y(t)=x(t)+v_2(t)}$ by means of the extended Kalman filter
+
+
+
+##### A measure problem in model identification is the choice of the model type and the selection of its appropriate complexity. Concisely present the available methods.
+
+
+
+
+
+
+
+
+
