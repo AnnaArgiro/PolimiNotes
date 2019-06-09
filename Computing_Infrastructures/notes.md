@@ -685,7 +685,7 @@ $$
 - *Controller overhead:*  
   the time required to send the data.   
 
-#### Without Locality
+#### Without Locality Concept
 
 - **Rotational Latency of a disk**  
   The rotational latency of a disk is half of the time required to perform one rotation  
@@ -706,7 +706,7 @@ $$
 
 
 
-#### With Locality
+#### With Locality Concept
 
 Another quantity to consider is the data locality, which considers the fragmentation of the disk by telling the percentage of data that are stored contiguously. 
 
@@ -721,7 +721,17 @@ $$
 
 
 
+if you have 
 
+- block size
+- mean I/O service time per block (with no locality)
+- transfer time of 1 block
+- overhead controller
+- file dimension
+
+$$
+\bigg(\frac{filedim\cdot1024}{blocksize}\bigg)\bigg[(loc)(ohc+transf\ time \ per \ block) + (1-loc)(I/O \ service \ time \ with \ no \ locality)\bigg]
+$$
 
 
 
@@ -747,6 +757,35 @@ Data are stored in an array of NAND cells, which can be of two types:
 
 
 
+
+# Dependability
+
+### Availability
+
+- $A=\frac{MTTF}{MTTF+MTTR}$
+- $A_{serial}=A_1A_2A_3...A_n$
+- $A_{parallel}=1-\prod(1-A_i)$
+
+### Reliability
+
+- $R(t)=e^{-\frac{t}{MTTF}}$
+- $R_{parallel}=1-(1-R_A(t))(1-R_B(t))$
+
+
+
+# Closed Queuing Networks
+
+### Response Time Bounds
+
+$$
+max(D,ND_{max}-Z)\le R \le ND
+$$
+
+### Throughput Bounds
+
+$$
+\frac{N}{ND+Z} \le X \le \min\bigg(\frac{N}{D+Z},\frac{1}{D_{max}}\bigg)
+$$
 
 
 
