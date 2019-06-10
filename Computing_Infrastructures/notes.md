@@ -314,87 +314,13 @@ There are 4 kinds of Virtual Network Adapters (VNA):
 
 # Performance
 
-### Basics
-
-<img src="images\1555696696386.png" style="zoom:50%">
-
-### Unbalanced Systems
-
-<img src="images\1558026389109.png" style="zoom:50%">
-
-### Open Models
-
-<img src="images\1558103934130.png" style="zoom:50%">
-
-<img src="images\1558103874687.png" style="zoom:50%">
-
-- $X_k(\lambda)=\lambda V_k$
-
-### Closed Models - batch workload
-
-- **Performance Bounds**  
-  $$
-  \frac{1}{D}\le X(N)\le min(\frac{N}{D},\frac{1}{D_{max}})
-  $$
-
-  $$
-  max(D,ND_{max}) \le R(N) \le ND
-  $$
-
-  $$
-  N^*=\frac{D}{D_{max}}
-  $$
-
-- **Balanced System Bounds**
-  $$
-  \frac{N}{D+(N-1)D_{max}} \le X(N) \le min(\frac{1}{D_{max}},\frac{N}{D+(N-1)D_{avg}})
-  $$
-
-  $$
-  max(ND_{max},D+(N-1)D_{avg}) \le R(N) \le D+(N-1)D_{max}
-  $$
-
-  $$
-  N^+=\frac{D-D_{avg}}{D_{max}-D_{avg}}
-  $$
-
-  The throughput must be computed, the response time is bounded by lines passing through ${(1,D)}$ and  ${(0,D-D_{avg})(0,D-D_{max})}$ 
+## Basics
 
 
 
-### Closed Models - Terminal workloads
+<img src="images\1555696696386.png" style="zoom:40%">
 
-**Performance Bounds**  
-$$
-\frac{N}{D+Z} \le X(N) \le min(\frac{N}{D+Z},\frac{1}{D_{max}})
-$$
-
-$$
-max(D,ND_{max}-Z) \le R(N) \le ND
-$$
-
-$$
-N^*=\frac{D+Z}{D_{max}}
-$$
-
-**Balanced Systems Bounds**
-$$
-\frac{N}{D+Z+\frac{(N-1)D_{max}}{1+\frac{Z}{ND}}} \le X(N) \le min(\frac{1}{D_{max}},\frac{N}{D+Z+\frac{(N-1)D_{avg}}{1+\frac{Z}{D}}})
-$$
-
-$$
-max(ND_{max}-Z,D+\frac{(N-1)D_{avg}}{1+\frac{Z}{D}}) \le R(N) \le D +\frac{(N-1)D_{max}}{1+\frac{Z}{ND}}
-$$
-
-$$
-N^+=\frac{(D+Z)^2-D\cdot D_{avg}}{(D+Z)D_{max}-D \cdot D_{avg}}
-$$
-
-The throughput and the pessimistic bound on response time must be computed. The optimistic bound on the response time is a line through the points ${(0,D-\frac{D_{avg}}{1+\frac{Z}{D}})}$ and ${(1,D)}$.  
-
-### Things
-
-in interactive systems we can't use little's law because we have thinking users.
+- in interactive systems we can't use little's law because we have thinking users.
 
 - Workload Intensity: the rate at which customers arrive
 - Service Demand: Average service requirement of a customer
@@ -404,9 +330,105 @@ in interactive systems we can't use little's law because we have thinking users.
 - Queue Length: the average number of customers at the service center, both waiting and receiving service
 - Throughput: the rate at which customers pass through the service center
 
+## Unbalanced Systems
+
+<img src="images\1558026389109.png" style="zoom:40%">
+
+## Open Models  
+
+$$
+X(\lambda) \le \frac{1}{D_{max}} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D \le R(\lambda)
+\\
+\downarrow
+\\
+X(\lambda) \le \frac{1}{D_{max}} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \frac{D}{1-\lambda D_{avg}} \le R(\lambda) \le \frac{D}{1-\lambda D_{max}} 
+$$
 
 
-### Single-Class Multi Station System with two stations
+
+<img src="images\1558103874687.png" style="zoom:40%">
+
+- $X_k(\lambda)=\lambda V_k$
+
+
+
+
+
+## Closed Queuing Models 
+
+### Normal
+
+$$
+\max(ND_{max}-Z,D) \ \ \ \ \ \ \  \le  \ \ \ \ \ \ \ R(N) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  ND 
+\\ 
+\
+\\
+\frac{N}{D+Z} \ \ \ \ \ \ \  \le \ \ \ \ \ \ \ X(N) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  \min\bigg(\frac{N}{D+Z},\frac{1}{D_{max}}\bigg)
+$$
+
+$$
+N^*=\frac{D+Z}{D_{max}}
+$$
+
+
+
+### Balanced
+
+$$
+D_{avg}=\frac{D}{number \ of \ stations}
+$$
+
+$$
+\max\Bigg(ND_{max}-Z,D+\frac{(N-1)D_{avg}}{1+\frac{Z}{D}}\Bigg) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  R(N) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  D +\frac{(N-1)D_{max}}{1+\frac{Z}{ND}}
+$$
+
+$$
+\frac{N}{D+Z+\frac{(N-1)D_{max}}{1+\frac{Z}{ND}}} \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  X(N) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  \min\Bigg(\frac{1}{D_{max}},\frac{N}{D+Z+\frac{(N-1)D_{avg}}{1+\frac{Z}{D}}}\Bigg)
+$$
+
+$$
+N^+=\frac{(D+Z)^2-D\cdot D_{avg}}{(D+Z)D_{max}-D \cdot D_{avg}}
+$$
+
+
+
+
+
+## Closed Batch Models
+
+### Normal
+
+$$
+\max(ND_{max},D) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  R(N) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  ND
+\\
+\ 
+\\
+\frac{1}{D} \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  X(N) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  \min\bigg(\frac{N}{D},\frac{1}{D_{max}}\bigg)
+$$
+
+$$
+N^*=\frac{D}{D_{max}}
+$$
+
+
+
+### Balanced
+
+$$
+\max(ND_{max},D+(N-1)D_{avg}) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  R(N) \ \ \ \ \ \ \  \le \ \ \ \ \ \ \  D+(N-1)D_{max}
+$$
+
+$$
+\frac{N}{D+(N-1)D_{max}} \le X(N) \le \min(\frac{1}{D_{max}},\frac{N}{D+(N-1)D_{avg}})
+$$
+
+$$
+N^+=\frac{D-D_{avg}}{D_{max}-D_{avg}}
+$$
+
+
+
+## Single-Class Multi Station Systems with two stations
 
 - ${R_1=r_1V_1}$
 - ${R_2=r_2V_2}$
@@ -433,7 +455,7 @@ Two techniques must be implemented on RAID disks.
 
 There are many types of architectures, the choice should be done accordingly to the required features.   
 
-### RAID 0  
+## RAID 0  
 
 Data are written on a single logical disk and then split by the controller among the several physical disks.   
 It has the lowest costs and the best write performance of all the levels, but the failure of a single disk will cause the loss of data, so it is used where performance and capacity are very important while data reliability is not an issue.   
@@ -445,7 +467,7 @@ MTTDL=\frac{MTTF}{n}
 $$
 
 
-### RAID 1 
+## RAID 1 
 
 Data are duplicated, two physical disks contain the same data;   
 it has a high reliability, and read and write performance are not bad, as data can be accessed in parallel without the need of computing parity bits;  
@@ -456,7 +478,7 @@ In theory, data could be copied on more than one disk, but this solution is neve
 $$
 MTTDL=\frac{MTTF^{(n)}}{n \cdot MTTR^{(n-1)}}
 $$
-### Combinations of 0 and 1
+## Combinations of 0 and 1
 
 If several disks are available, RAIDs can be combined:  
 x+y means that there are ${n\cdot m}$ disks in total, then RAID ${x}$ is applied to groups of ${n}$ disks, that are treated like a single one onto which is applied RAID ${y}$.  
@@ -478,14 +500,14 @@ MTTDL=\frac{MTTF^2}{n\cdot MTTR}
 $$
 
 
-### RAID 2 
+## RAID 2 
 
 It's not used.  
 The number of redundant disks is proportional to the log of the total number of disks.  
 The parity is calculated for several subset of overlapped data, the number of disks where parity bits are stored is proportional to the logarithm of the disks that contain data. When a block fails, several of the parity blocks will have inconsistent value, the failed component is the one held in common by each incorrect subset.  
 <img src="images\1558211544768.png" style="zoom:50%">
 
-### RAID 3 
+## RAID 3 
 
 Here the failed disk is assumed to be known, which is realistic as the controller is usually able to detect the failed component.  
 Data are interleaved byte-wise over the data disks.  
@@ -508,7 +530,7 @@ ${b) \ 10101010 \ XOR}$
 ${c) \ 11001010=}$  
 ${a) \ 01100011 }$
 
-### RAID 4 
+## RAID 4 
 
 It is similar to level 3, the main difference is that <u>parity is calculated for strips that have the same position in all the disks and then stored in that aimed for redundancy.</u>   
 The single disk for redundant data (parity disk, accessed at each write) can easily become the bottleneck: all the write must access it, so they cannot be parallelized. This level is able to recover from the failure of one disk.   
@@ -517,7 +539,7 @@ The single disk for redundant data (parity disk, accessed at each write) can eas
 
 
 
-### RAID 5 
+## RAID 5 
 
 It is exactly identical to level 4, but the parity blocks are uniformly distributed over the disk, thus avoiding the bottleneck on the parity disk and allowing load balancing among the data disks.  
 It loses data if more than one disk fails.  
@@ -528,7 +550,7 @@ MTTDL=\frac{MTTF^2}{(n)(n-1)MTTR}
 $$
 
 
-### RAID 6 
+## RAID 6 
 
 This level is able to recover from the failure of two disks, as it uses two redundancy schemes P and Q which are independent.  
 On the other hand, it needs a disk more than level 5 to be implemented and a greater computational overhead, so it must be used only for very critical applications.   
@@ -622,7 +644,7 @@ MTTDL=\frac{2MTTF^3}{(n)(n-1)(n-2)MTTR^2}
 $$
 
 
-### RAID 7
+## RAID 7
 
 not standardized yet, we will not see it.
 
@@ -654,9 +676,9 @@ They are accessed using the standard ethernet using an appliance called NAS
 
 
 
-# Storage Structures
+## Storage Structures
 
-## HDD Structure
+### HDD Structure
 
 $$
 LBA=(C\cdot heads \ per \ cylinder \ + \ H)\cdot \ sector \ per \ track \ + \ (S-1)
@@ -735,7 +757,7 @@ $$
 
 
 
-## SSD Structure
+### SSD Structure
 
 Data are stored in an array of NAND cells, which can be of two types:
 
@@ -760,35 +782,30 @@ Data are stored in an array of NAND cells, which can be of two types:
 
 # Dependability
 
-### Availability
+## Availability
 
 - $A=\frac{MTTF}{MTTF+MTTR}$
 - $A_{serial}=A_1A_2A_3...A_n$
 - $A_{parallel}=1-\prod(1-A_i)$
 
-### Reliability
+## Reliability
 
 - $R(t)=e^{-\frac{t}{MTTF}}$
 - $R_{parallel}=1-(1-R_A(t))(1-R_B(t))$
 
 
 
-# Closed Queuing Networks
-
-### Response Time Bounds
-
-$$
-max(D,ND_{max}-Z)\le R \le ND
-$$
-
-### Throughput Bounds
-
-$$
-\frac{N}{ND+Z} \le X \le \min\bigg(\frac{N}{D+Z},\frac{1}{D_{max}}\bigg)
-$$
-
 
 
 # Childhood's Memories
 
 - ${RPM=}$ Revolutions Per Minute
+
+
+
+# Doubts
+
+<img src="images/doubt2.png" style="zoom:50%">
+
+
+
