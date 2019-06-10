@@ -283,14 +283,14 @@ There are 4 kinds of Virtual Network Adapters (VNA):
 - The VMM is treated as any other application.
 - port-forwarding must be enabled
 
-<img src="C:/Users/Willi/Desktop/myGitHub/Notes/Computing%20Infrastructures/images/nat.png" style="zoom:50%">
+<img src="images/nat.png" style="zoom:50%">
 
 #### Bridged Networking
 
 - the VM seems to be actually connected to the real network
 - no port-forwarding should be setup
 
-<img src="C:/Users/Willi/Desktop/myGitHub/Notes/Computing%20Infrastructures/images/bridged_net.png" style="zoom:50%">
+<img src="images/bridged_net.png" style="zoom:50%">
 
 
 
@@ -300,7 +300,7 @@ There are 4 kinds of Virtual Network Adapters (VNA):
 - Allows the connection between the Host and the Guest VMs only
 - the host and the VMs can communicate among each other using this special virtual network card
 
-<img src="C:/Users/Willi/Desktop/myGitHub/Notes/Computing%20Infrastructures/images/honet.png" style="zoom:50%">
+<img src="images/honet.png" style="zoom:50%">
 
 
 
@@ -308,7 +308,7 @@ There are 4 kinds of Virtual Network Adapters (VNA):
 
 - Creates a network that connects only the VMs, and it is not reachable from the outside
 
-<img src="C:/Users/Willi/Desktop/myGitHub/Notes/Computing%20Infrastructures/images/i_net.png" style="zoom:50%">
+<img src="images/i_net.png" style="zoom:50%">
 
 
 
